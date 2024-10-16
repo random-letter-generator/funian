@@ -1,0 +1,12 @@
+{
+  "manifest_version": 3,
+  "name": "funian",
+  "version": "1.0",
+  "description": "ABCD",
+  "content_scripts": [
+    {
+      "matches": ["https://www.youtube.com/*"],
+      "js": ["./main.js"]
+    }
+  ]
+}
