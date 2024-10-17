@@ -5,22 +5,17 @@
   "description": "extra fancy chrome extension by Ian and Funan",
   "content_scripts": [
     {
-      "matches": ["https://*/*"],
+      "matches": ["<all_urls>"],
       "js": ["./scripts/content.js"]
     }
   ],
   "action": {
-    "default_popup": "index.html",
     "default_icon": "assets/zoof-icon-min.png"
   },
   "web_accessible_resources": [
     {
-      "matches": ["https://*/*"],
-      "resources": [
-        "assets/zoof-icon-min.png",
-        "assets/walkingV2.png",
-        "tunnel.gif"
-      ]
+      "matches": ["<all_urls>"],
+      "resources": ["assets/*.gif", "assets/*.png"]
     }
   ]
 }
