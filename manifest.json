@@ -2,11 +2,15 @@
   "manifest_version": 3,
   "name": "funian",
   "version": "1.0",
-  "description": "ABCD",
+  "description": "extra fancy chrome extension by Ian and Funian",
   "content_scripts": [
     {
-      "matches": ["https://www.youtube.com/*"],
-      "js": ["./main.js"]
+      "matches": ["https://*/*"],
+      "js": ["./scripts/insert.js"]
     }
-  ]
+  ],
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": "assets/zoof-icon-min.png"
+  }
 }
