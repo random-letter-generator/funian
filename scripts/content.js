@@ -1,10 +1,40 @@
 //////////////////////////////////////////
 // Global Parameters
 const moveStepSize = 5;
-const refreshTime = 10;
-let gifs = ['seridertroll', 'dollar', 'blackhole', 'cat1'];
+const refreshTime = 5;
+let gifs = [
+  'frog-rainbow',
+  'snoopdogg2',
+  'seridertroll',
+  'dollar',
+  'blackhole',
+  'cat1',
+  'cat-huh',
+];
 gifs = gifs.map((str) => 'assets/' + str + '.gif');
 console.log(gifs);
+
+const additionalStyles = document.createElement('style');
+additionalStyles.innerHTML = `
+  @keyframes shake {
+    0% { transform: translate(5px, 5px) rotate(0deg); }
+    10% { transform: translate(-5px, -5px) rotate(-1deg); }
+    20% { transform: translate(-10px, 0px) rotate(1deg); }
+    30% { transform: translate(10px, 5px) rotate(0deg); }
+    40% { transform: translate(5px, -5px) rotate(1deg); }
+    50% { transform: translate(-5px, 5px) rotate(-1deg); }
+    60% { transform: translate(-10px, 5px) rotate(0deg); }
+    70% { transform: translate(10px, 5px) rotate(-1deg); }
+    80% { transform: translate(-5px, -5px) rotate(1deg); }
+    90% { transform: translate(5px, 5px) rotate(0deg); }
+    100% { transform: translate(5px, -5px) rotate(-1deg); }
+    }
+    .shake-effect {
+      animation: shake 0.5s;
+    }
+  }
+`;
+document.head.appendChild(additionalStyles); // Inject these styles into the head of whatever the webpage user is viewing
 
 ////////////////////////////////////////////////
 class Head {
@@ -80,11 +110,20 @@ class Head {
 
     // Check for collision with the apple
     if (this.ifHitsApple()) {
-      // if hits, move the apple to somewhere else randomly
-      this.apple.moveApple();
+      // add some cool effects to apple
+      this.apple.node.classList.add('shake-effect');
+
+      // after some short amount of time
+      setTimeout(() => {
+        // remove the effects from apple
+        this.apple.node.classList.remove('shake-effect');
+
+        // move the apple to somewhere else randomly
+        this.apple.moveApple();
+      }, 200);
     }
 
-    // Continue moving
+    // Continue moving the head
     setTimeout(this.boundMove, this.SPEED);
   }
 
@@ -117,9 +156,10 @@ class Apple {
   constructor(board) {
     // create apple element and style it
     this.node = document.createElement('img');
-    this.node.src = chrome.runtime.getURL('assets/seridertroll.gif');
-    this.node.style.width = '70px';
-    this.node.style.height = '70px';
+    this.gifIndex = 0;
+    this.node.src = chrome.runtime.getURL(gifs[this.gifIndex]);
+    this.node.style.width = '100px';
+    this.node.style.height = '100px';
     this.node.style.position = 'absolute';
 
     // give apple an initial position
@@ -132,8 +172,6 @@ class Apple {
 
     // append the apple element to the board
     board.appendChild(this.node);
-
-    this.gifIndex = 0;
   }
 
   moveApple() {
@@ -142,8 +180,8 @@ class Apple {
 
     // randomly generate a new location
     this.position = {
-      left: Math.random() * window.innerWidth - appleWidth,
-      top: Math.random() * window.innerHeight - appleHeight,
+      left: Math.random() * 0.8 * window.innerWidth + appleWidth,
+      top: Math.random() * 0.8 * window.innerHeight + appleHeight,
     };
 
     // write the new location back to the stype property of apple element
