@@ -3,11 +3,11 @@
 const moveStepSize = 5;
 const refreshTime = 5;
 let gifs = [
+  'do-it',
+  'dog1',
   'frog-rainbow',
   'snoopdogg2',
   'seridertroll',
-  'dollar',
-  'blackhole',
   'cat1',
   'cat-huh',
 ];
@@ -158,8 +158,8 @@ class Apple {
     this.node = document.createElement('img');
     this.gifIndex = 0;
     this.node.src = chrome.runtime.getURL(gifs[this.gifIndex]);
-    this.node.style.width = '100px';
-    this.node.style.height = '100px';
+    this.node.style.width = '150px';
+    this.node.style.height = 'auto';
     this.node.style.position = 'absolute';
 
     // give apple an initial position
